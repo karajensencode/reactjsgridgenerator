@@ -1,11 +1,11 @@
 import { useContext, useEffect, useCallback  } from "react"; //useCallback, useEffect
-import { TableContext, FormContext, GridContext  } from "../context/context";
+import { TableContext, FormContext, GridsContext  } from "../context/context";
 import DynamicGrid from "./DynamicGrid";
 
 const Grids = ({ formButtonClicked, setFormButtonClicked, gridList, setGridList}) => {
     const { table } = useContext(TableContext);
     const { rows, columns } = useContext(FormContext);
-    const { grids, setGrids, count, setCount } = useContext(GridContext);
+    const { grids, count, setCount } = useContext(GridsContext);
 
     const updateGridRows = () => {
         for (let i = 0; i < rows.current.value; i++) {
@@ -64,7 +64,7 @@ const Grids = ({ formButtonClicked, setFormButtonClicked, gridList, setGridList}
 
     return (
         <>
-            ({grids
+            {grids
                 //.reduce(grid => grid.there)
                 //.filter(grid => grid.top)
                 .map((item, idx) => (
@@ -72,7 +72,7 @@ const Grids = ({ formButtonClicked, setFormButtonClicked, gridList, setGridList}
                         key={idx} idx={idx} z={item.div}
                         rows={item.rows} columns={item.columns}
                     />
-                ))})
+                ))}
         </>
 
     )

@@ -3,6 +3,7 @@ import Form from "./components/Form";
 import Grids from "./components/Grids";
 import {
   FormProvider,
+  GridsProvider,
   GridProvider,
   TableProvider
 } from "./context/context";
@@ -25,11 +26,27 @@ const App = () => {
       div: -1
     }
   };
+
   const [ gridList, setGridList ] = useState({
-        count: 0,
+        cont: 0,
         isPathAvailable: true,
         grids: [],
   });
+
+  const grid = {
+    idx: 1,
+    columns: [],
+    rows: [],
+    top: true,
+    div: -1,
+    style: {
+      color: "grey",
+      backgroundColor: "white",
+      fontFamily: "Arial",
+      position: "absolute",
+      zIndex: -1,
+    }
+  };
 
   useEffect((() => {
     console.log(gridList);
@@ -38,23 +55,25 @@ const App = () => {
   return (
     <TableProvider value={table}>
       <FormProvider value={form}>
-        <GridProvider value={gridList}>
-            <div className="App">
-              <h1>Graph</h1>
-              <h2>Generate a Grid</h2>
-            <Form
-              setFormButtonClicked={setFormButtonClicked}
-              gridList={gridList}
-            />
-            <Grids
-              formButtonClicked={formButtonClicked}
-              setFormButtonClicked={setFormButtonClicked}
-              gridList={gridList}
-              setGridList={setGridList}
-            />
-              <br />
-            </div>
-        </GridProvider>
+        <GridsProvider value={gridList}>
+          <GridProvider value={grid}>
+              <div className="App">
+                <h1>Graph</h1>
+                <h2>Generate a Grid</h2>
+              <Form
+                setFormButtonClicked={setFormButtonClicked}
+                gridList={gridList}
+              />
+              <Grids
+                formButtonClicked={formButtonClicked}
+                setFormButtonClicked={setFormButtonClicked}
+                gridList={gridList}
+                setGridList={setGridList}
+              />
+                <br />
+              </div>
+          </GridProvider>
+        </GridsProvider>
       </FormProvider>
     </TableProvider>
   );

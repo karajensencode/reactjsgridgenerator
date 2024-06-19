@@ -1,34 +1,43 @@
-import { useEffect } from "react"; //useState
+import { useContext, useRef, useEffect } from "react"; //useState
 //import DynamicCell from "./DynamicCell";
+//import { useTable, useSortBy, useFilters } from "react-table"; - Uee Later
+import { GridContext } from "../context/context";
 
 const DynamicGrid = (props) => {
+  const grid = useContext(GridContext);
+
   useEffect(() => {
-    console.log(props);
+    console.log("DynamicGrid Grid", grid);//   console.log("DynamicGrid props", props);
   });
 
-  const gridStyle = {
+  const gridStyle = useRef( {
     color: "grey",
-    backgroundColor: "white", 
+    backgroundColor: "white",
     fontFamily: "Arial",
     position: "absolute",
     zIndex: `${props.z}`,
-  };
+  });
 
   const cellStyle = {
     backgroundColor: "white",
     border: "1px solid darkGrey",
     padding: "20px",
-};
+  };
 
   const tableStyle = {
+    verticalAlign: 'middle',
+    display: 'flex',
+    alignContent: 'flex-start',
+    justifyContent: 'space-evenly',
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    //Preiously Added
     border: "1px solid black",
   }
 
   const Columns = () => {
-    return props.columns.map((item, idx) => ( 
-        <td 
-            key={idx} 
-            style={cellStyle}></td>
+    return props.columns.map((item, idx) => (
+        <td  key={idx} style={cellStyle}></td>
     ));
   };
 
@@ -49,14 +58,30 @@ const DynamicGrid = (props) => {
         y : e.clientY
     };
 
-    gridStyle.left = mousePosition.x;
-    gridStyle.top = mousePosition.y;
+    gridStyle.left.current.value = mousePosition.x;
+    gridStyle.top.current.value = mousePosition.y;
   };
 
+  const onAuxClickCapture = (e) => {
+    e.preventDefault();
+    console.log('onAuxClickCapture');
+  };
+
+  const onMouseClick = (e) => {
+    e.preventDefault();
+    console.log('onMouseClick');
+  };
 
   return (
     <>
-        <div key={props.idx} style={gridStyle} id={`grid-${props.idx}`} onMouseDown={moveOnMouseDown}>
+      <div
+        key={props.idx}
+        style={gridStyle}
+        id={`grid-${props.idx}`}
+        onClick={onMouseClick}
+        onMouseDown={moveOnMouseDown}
+        onAuxClickCapture={onAuxClickCapture}
+      >
             <br />
                 <p>{`Grid ${props.idx}`}</p>
                 <table style={tableStyle}>
