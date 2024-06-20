@@ -51,15 +51,26 @@ import { createContext, useState, useRef } from 'react';
     };
 
     const GridProvider = ({ children }) => {
-        const [count, setCount] = useState(1);
-        const [isPathAvailable, setIsPathAvailable] = useState(false);
-        const [grids, setGrids] = useState([]);
+        const [id, setId] = useState(-1);
+        const columns = useRef([]);
+        const rows = useRef([]);
+        const top = useRef(true);
+        const div = useRef(-1);
+        const [ visible, setVisible ] = useState(false);
+        const style = {
+            color: "grey",
+            backgroundColor: "white",
+            fontFamily: "Arial",
+            position: "absolute",
+            zIndex: '-1',
+        };
 
         return (
             <GridContext.Provider value={{
-                count, setCount,
-                isPathAvailable, setIsPathAvailable,
-                grids, setGrids
+                id, setId,
+                columns, rows, top, div,
+                visible, setVisible,
+                style,
             }}>
             {children}
             </GridContext.Provider>
