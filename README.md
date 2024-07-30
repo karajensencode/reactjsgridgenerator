@@ -13,7 +13,7 @@ Personal Project creating a grid using a count of how many boxes you want, added
  Other work I've done...
 
  - Gists: https://gist.github.com/karajensencode
- - CodePen:  // https://codepen.io/Kara-Jensen
+ - CodePen:  https://codepen.io/kjensen // https://codepen.io/Kara-Jensen
  - LinkedIn: https://www.linkedin.com/in/karabjensen/: 
  - ExtJS Fiddles: https://fiddle.sencha.com/ {kara.jensen}
 
