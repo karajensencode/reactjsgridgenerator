@@ -1,11 +1,24 @@
-import { useContext, useEffect, useCallback  } from "react"; //useCallback, useEffect
+import { useContext, useEffect, useCallback, useReducer  } from "react"; //useCallback, useEffect
 import { TableContext, FormContext, GridsContext  } from "../context/context";
 import DynamicGrid from "./DynamicGrid";
+
+
+const reducer = (state, action) => {
+  if (action.type === 'incremented_age') {
+    return {
+      age: state.age + 1
+    };
+  }
+  throw Error('Unknown action.');
+};
 
 const Grids = ({ formButtonClicked, setFormButtonClicked, gridList, setGridList}) => {
     const { table } = useContext(TableContext);
     const { rows, columns } = useContext(FormContext);
     const { grids, count, setCount } = useContext(GridsContext);
+    const [ state, dispatch ] = useReducer(reducer, { age: 42 });
+
+
 
     const updateGridRows = () => {
         for (let i = 0; i < rows.current.value; i++) {
@@ -64,6 +77,12 @@ const Grids = ({ formButtonClicked, setFormButtonClicked, gridList, setGridList}
 
     return (
         <>
+            <button onClick={() => {
+                dispatch({ type: 'incremented_age' })
+            }}>
+                Increment age
+            </button>
+            <p>Hello! You are {state.age}.</p>
             {grids
                 //.reduce(grid => grid.there)
                 //.filter(grid => grid.top)
